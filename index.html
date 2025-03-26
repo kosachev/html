@@ -1,1 +1,91 @@
-Hello!
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Меню и Хедер</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+      }
+
+      header {
+        position: sticky;
+        top: 0;
+        background-color: #333;
+        color: white;
+        padding: 1rem;
+        z-index: 1000;
+      }
+
+      .menu-button {
+        background: #555;
+        color: white;
+        border: none;
+        padding: 0.5rem 1rem;
+        cursor: pointer;
+      }
+
+      .sidebar {
+        position: fixed;
+        top: 0;
+        left: -250px;
+        width: 250px;
+        height: 100%;
+        background: #222;
+        color: white;
+        padding: 1rem;
+        transition: left 0.3s ease;
+        z-index: 999;
+      }
+
+      .sidebar.open {
+        left: 0;
+      }
+
+      .content {
+        padding: 2rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="sidebar" id="sidebar">
+      <p>Левое меню</p>
+      <ul>
+        <li>Пункт 1</li>
+        <li>Пункт 2</li>
+        <li>Пункт 3</li>
+      </ul>
+    </div>
+
+    <header>
+      <button class="menu-button" onclick="toggleSidebar()">☰ Меню</button>
+      <span style="margin-left: 1rem">Хедер</span>
+    </header>
+
+    <div class="content">
+      <p>Прокрути вниз...</p>
+      <div style="height: 2000px"></div>
+    </div>
+
+    <script>
+      const sidebar = document.getElementById("sidebar");
+
+      function toggleSidebar() {
+        sidebar.classList.toggle("open");
+      }
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key.toLowerCase() === "m") {
+          toggleSidebar();
+        }
+      });
+    </script>
+  </body>
+</html>
