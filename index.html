@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Меню и Хедер</title>
+    <title>Меню с оверлеем, Esc и свайпом</title>
     <style>
       * {
         box-sizing: border-box;
@@ -42,11 +42,26 @@
         color: white;
         padding: 1rem;
         transition: left 0.3s ease;
-        z-index: 999;
+        z-index: 1001;
       }
 
       .sidebar.open {
         left: 0;
+      }
+
+      .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.5);
+        display: none;
+        z-index: 1000;
+      }
+
+      .overlay.show {
+        display: block;
       }
 
       .content {
@@ -64,6 +79,8 @@
       </ul>
     </div>
 
+    <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+
     <header>
       <button class="menu-button" onclick="toggleSidebar()">☰ Меню</button>
       <span style="margin-left: 1rem">Хедер</span>
@@ -76,16 +93,58 @@
 
     <script>
       const sidebar = document.getElementById("sidebar");
+      const overlay = document.getElementById("overlay");
+
+      function openSidebar() {
+        sidebar.classList.add("open");
+        overlay.classList.add("show");
+      }
+
+      function closeSidebar() {
+        sidebar.classList.remove("open");
+        overlay.classList.remove("show");
+      }
 
       function toggleSidebar() {
-        sidebar.classList.toggle("open");
+        const isOpen = sidebar.classList.contains("open");
+        if (isOpen) {
+          closeSidebar();
+        } else {
+          openSidebar();
+        }
       }
 
       document.addEventListener("keydown", (e) => {
         if (e.key.toLowerCase() === "m") {
           toggleSidebar();
         }
+        if (e.key === "Escape") {
+          closeSidebar();
+        }
       });
+
+      // Обработка свайпов
+      let touchStartX = 0;
+      let touchEndX = 0;
+
+      document.addEventListener("touchstart", (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+      });
+
+      document.addEventListener("touchend", (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleGesture();
+      });
+
+      function handleGesture() {
+        const deltaX = touchEndX - touchStartX;
+
+        if (deltaX > 70) {
+          openSidebar(); // свайп вправо — открыть
+        } else if (deltaX < -70) {
+          closeSidebar(); // свайп влево — закрыть
+        }
+      }
     </script>
   </body>
 </html>
