@@ -3,170 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Меню + Слайдер + Кнопки</title>
-    <style>
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
-
-      body {
-        font-family: Arial, sans-serif;
-        background: #fcdce5;
-      }
-
-      header {
-        position: sticky;
-        top: 0;
-        background-color: #333;
-        color: white;
-        padding: 1rem;
-        z-index: 1002;
-      }
-
-      .menu-button {
-        background: #555;
-        color: white;
-        border: none;
-        padding: 0.5rem 1rem;
-        cursor: pointer;
-      }
-
-      .sidebar {
-        position: fixed;
-        top: 0;
-        left: -250px;
-        width: 250px;
-        height: 100%;
-        background: #222;
-        color: white;
-        padding: 1rem;
-        transition: left 0.3s ease;
-        z-index: 1001;
-      }
-
-      .sidebar.open {
-        left: 0;
-      }
-
-      .overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background: rgba(0, 0, 0, 0.5);
-        display: none;
-        z-index: 1000;
-      }
-
-      .overlay.show {
-        display: block;
-      }
-
-      .content {
-        padding: 2rem;
-      }
-
-      /* Слайдер */
-      .slider {
-        position: relative;
-        overflow: hidden;
-        width: 100%;
-        max-width: 500px;
-        margin: 0 auto;
-        border-radius: 12px;
-      }
-
-      .slider-track {
-        display: flex;
-        transition: transform 0.4s ease;
-        touch-action: pan-y;
-      }
-
-      .slide {
-        min-width: 100%;
-        user-select: none;
-      }
-
-      .slide img {
-        width: 100%;
-        display: block;
-        border-radius: 12px;
-      }
-
-      .dots {
-        text-align: center;
-        margin-top: 10px;
-      }
-
-      .dot {
-        display: inline-block;
-        width: 10px;
-        height: 10px;
-        background: #999;
-        border-radius: 50%;
-        margin: 0 5px;
-        cursor: pointer;
-      }
-
-      .dot.active {
-        background: #333;
-      }
-
-      /* Кнопки под слайдером */
-      .product-actions {
-        text-align: center;
-        margin-top: 2rem;
-      }
-
-      .price {
-        font-size: 1.2rem;
-        font-weight: bold;
-        margin-bottom: 1rem;
-        color: #702737;
-      }
-
-      .btn {
-        background: #702737;
-        color: white;
-        font-weight: bold;
-        border: none;
-        padding: 1rem;
-        width: 100%;
-        max-width: 400px;
-        margin: 0.5rem auto;
-        display: block;
-        border-radius: 10px;
-        font-size: 1rem;
-      }
-
-      .divider {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 1rem 0;
-        color: #702737;
-      }
-
-      .divider hr {
-        border: none;
-        border-top: 1px solid #e5bfc6;
-        width: 40%;
-        margin: 0 10px;
-      }
-
-      .contact-title {
-        font-weight: bold;
-        color: #702737;
-        margin: 1rem 0 0.5rem;
-      }
-    </style>
+    <title>Магазин</title>
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <div class="sidebar" id="sidebar">
-      <p>Левое меню</p>
+      <p class="menu-title">Меню</p>
       <ul>
         <li>Пункт 1</li>
         <li>Пункт 2</li>
@@ -178,12 +20,10 @@
 
     <header>
       <button class="menu-button" onclick="toggleSidebar()">☰ Меню</button>
-      <span style="margin-left: 1rem">Хедер</span>
+      <span class="header-title">Магазин</span>
     </header>
 
     <div class="content">
-      <h2 style="text-align: center; margin-bottom: 1rem">Слайдер</h2>
-
       <div class="slider" id="slider">
         <div class="slider-track" id="sliderTrack">
           <div class="slide"><img src="slide1.jpg" alt="Слайд 1" /></div>
@@ -198,18 +38,17 @@
         <span class="dot" onclick="goToSlide(2)"></span>
       </div>
 
-      <!-- Новый блок кнопок -->
       <div class="product-actions">
         <p class="price">13 900₽</p>
-        <button class="btn primary">КУПИТЬ</button>
+        <button class="btn">КУПИТЬ</button>
         <div class="divider">
           <hr />
           <span>⌄</span>
           <hr />
         </div>
         <p class="contact-title">Для связи по всем вопросам</p>
-        <button class="btn secondary">ПОЗВОНИТЬ В МАГАЗИН</button>
-        <button class="btn secondary">НАПИСАТЬ В WHATSAPP</button>
+        <button class="btn">ПОЗВОНИТЬ В МАГАЗИН</button>
+        <button class="btn">НАПИСАТЬ В WHATSAPP</button>
       </div>
     </div>
 
@@ -237,7 +76,6 @@
         if (e.key === "Escape") closeSidebar();
       });
 
-      // Только закрытие меню по свайпу влево
       let touchStartX = 0;
       document.addEventListener("touchstart", (e) => {
         touchStartX = e.changedTouches[0].screenX;
@@ -246,7 +84,6 @@
       document.addEventListener("touchend", (e) => {
         const endX = e.changedTouches[0].screenX;
         const deltaX = endX - touchStartX;
-
         if (deltaX < -70) closeSidebar();
       });
 
@@ -262,7 +99,6 @@
         currentIndex = index;
       }
 
-      // Свайпы для слайдера
       let slideStartX = 0;
       sliderTrack.addEventListener("touchstart", (e) => {
         slideStartX = e.touches[0].clientX;

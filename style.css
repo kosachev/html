@@ -1,0 +1,185 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Segoe UI", sans-serif;
+  background: #f4f4f4;
+  color: #333;
+}
+
+/* Хедер */
+header {
+  position: sticky;
+  top: 0;
+  background-color: #1f1f1f;
+  color: white;
+  padding: 1rem 1.5rem;
+  z-index: 1002;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.menu-button {
+  background: #444;
+  color: white;
+  border: none;
+  padding: 0.6rem 1rem;
+  cursor: pointer;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.header-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+/* Меню */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -250px;
+  width: 250px;
+  height: 100%;
+  background: #121212;
+  color: white;
+  padding: 5rem 1rem 1rem;
+  transition: left 0.3s ease;
+  z-index: 1001;
+}
+
+.sidebar.open {
+  left: 0;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4);
+  display: none;
+  z-index: 1000;
+}
+
+.overlay.show {
+  display: block;
+}
+
+.menu-title {
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.sidebar ul {
+  list-style: disc inside;
+  line-height: 2;
+}
+
+/* Контент */
+.content {
+  padding: 2rem 1rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Слайдер */
+.slider {
+  overflow: hidden;
+  width: 100%;
+  border-radius: 12px;
+}
+
+.slider-track {
+  display: flex;
+  transition: transform 0.4s ease;
+  touch-action: pan-y;
+}
+
+.slide {
+  min-width: 100%;
+}
+
+.slide img {
+  width: 100%;
+  display: block;
+  border-radius: 12px;
+}
+
+.dots {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background: #aaa;
+  border-radius: 50%;
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.dot.active {
+  background: #333;
+}
+
+/* Кнопки и блок под слайдером */
+.product-actions {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.price {
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: #222;
+}
+
+.btn {
+  background: #2c2c2c;
+  color: white;
+  font-weight: 600;
+  border: none;
+  padding: 1rem;
+  width: 100%;
+  max-width: 400px;
+  margin: 0.5rem auto;
+  display: block;
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: background 0.3s ease;
+}
+
+.btn:hover {
+  background: #444;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1rem 0;
+  color: #555;
+}
+
+.divider hr {
+  border: none;
+  border-top: 1px solid #ccc;
+  width: 40%;
+  margin: 0 10px;
+}
+
+.contact-title {
+  font-weight: bold;
+  color: #444;
+  margin: 1rem 0 0.5rem;
+}
