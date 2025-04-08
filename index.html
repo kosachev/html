@@ -24,20 +24,35 @@
     </header>
 
     <div class="content">
-      <div class="slider" id="slider">
-        <div class="slider-track" id="sliderTrack">
+      <!-- Первый слайдер -->
+      <div class="slider" data-slider>
+        <div class="slider-track">
           <div class="slide"><img src="slide1.jpg" alt="Слайд 1" /></div>
           <div class="slide"><img src="slide2.jpg" alt="Слайд 2" /></div>
           <div class="slide"><img src="slide3.jpg" alt="Слайд 3" /></div>
         </div>
+        <div class="dots">
+          <span class="dot active"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+        </div>
       </div>
 
-      <div class="dots" id="dots">
-        <span class="dot active" onclick="goToSlide(0)"></span>
-        <span class="dot" onclick="goToSlide(1)"></span>
-        <span class="dot" onclick="goToSlide(2)"></span>
+      <!-- Второй слайдер -->
+      <div class="slider" data-slider>
+        <div class="slider-track">
+          <div class="slide"><img src="second1.jpg" alt="Слайд 1-2" /></div>
+          <div class="slide"><img src="second2.jpg" alt="Слайд 2-2" /></div>
+          <div class="slide"><img src="second3.jpg" alt="Слайд 3-2" /></div>
+        </div>
+        <div class="dots">
+          <span class="dot active"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+        </div>
       </div>
 
+      <!-- Блок с ценой и кнопками -->
       <div class="product-actions">
         <p class="price">13 900₽</p>
         <button class="btn">КУПИТЬ</button>
@@ -52,65 +67,6 @@
       </div>
     </div>
 
-    <script>
-      const sidebar = document.getElementById("sidebar");
-      const overlay = document.getElementById("overlay");
-
-      function openSidebar() {
-        sidebar.classList.add("open");
-        overlay.classList.add("show");
-      }
-
-      function closeSidebar() {
-        sidebar.classList.remove("open");
-        overlay.classList.remove("show");
-      }
-
-      function toggleSidebar() {
-        const isOpen = sidebar.classList.contains("open");
-        isOpen ? closeSidebar() : openSidebar();
-      }
-
-      document.addEventListener("keydown", (e) => {
-        if (e.key.toLowerCase() === "m") toggleSidebar();
-        if (e.key === "Escape") closeSidebar();
-      });
-
-      let touchStartX = 0;
-      document.addEventListener("touchstart", (e) => {
-        touchStartX = e.changedTouches[0].screenX;
-      });
-
-      document.addEventListener("touchend", (e) => {
-        const endX = e.changedTouches[0].screenX;
-        const deltaX = endX - touchStartX;
-        if (deltaX < -70) closeSidebar();
-      });
-
-      // Слайдер
-      const sliderTrack = document.getElementById("sliderTrack");
-      const dots = document.querySelectorAll(".dot");
-      let currentIndex = 0;
-
-      function goToSlide(index) {
-        sliderTrack.style.transform = `translateX(-${index * 100}%)`;
-        dots[currentIndex].classList.remove("active");
-        dots[index].classList.add("active");
-        currentIndex = index;
-      }
-
-      let slideStartX = 0;
-      sliderTrack.addEventListener("touchstart", (e) => {
-        slideStartX = e.touches[0].clientX;
-      });
-
-      sliderTrack.addEventListener("touchend", (e) => {
-        let slideEndX = e.changedTouches[0].clientX;
-        let diff = slideStartX - slideEndX;
-
-        if (diff > 50 && currentIndex < 2) goToSlide(currentIndex + 1);
-        if (diff < -50 && currentIndex > 0) goToSlide(currentIndex - 1);
-      });
-    </script>
+    <script src="script.js"></script>
   </body>
 </html>
