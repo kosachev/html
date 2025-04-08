@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Меню с оверлеем, Esc и свайпом</title>
+    <title>Меню + Слайдер</title>
     <style>
       * {
         box-sizing: border-box;
@@ -13,6 +13,7 @@
 
       body {
         font-family: Arial, sans-serif;
+        background: #fcdce5;
       }
 
       header {
@@ -67,6 +68,52 @@
       .content {
         padding: 2rem;
       }
+
+      /* Слайдер */
+      .slider {
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+        max-width: 500px;
+        margin: 0 auto;
+        border-radius: 12px;
+      }
+
+      .slider-track {
+        display: flex;
+        transition: transform 0.4s ease;
+        touch-action: pan-y;
+      }
+
+      .slide {
+        min-width: 100%;
+        user-select: none;
+      }
+
+      .slide img {
+        width: 100%;
+        display: block;
+        border-radius: 12px;
+      }
+
+      .dots {
+        text-align: center;
+        margin-top: 10px;
+      }
+
+      .dot {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        background: #999;
+        border-radius: 50%;
+        margin: 0 5px;
+        cursor: pointer;
+      }
+
+      .dot.active {
+        background: #333;
+      }
     </style>
   </head>
   <body>
@@ -87,8 +134,21 @@
     </header>
 
     <div class="content">
-      <p>Прокрути вниз...</p>
-      <div style="height: 2000px"></div>
+      <h2 style="text-align: center; margin-bottom: 1rem">Слайдер</h2>
+
+      <div class="slider" id="slider">
+        <div class="slider-track" id="sliderTrack">
+          <div class="slide"><img src="slide1.jpg" alt="Слайд 1" /></div>
+          <div class="slide"><img src="slide2.jpg" alt="Слайд 2" /></div>
+          <div class="slide"><img src="slide3.jpg" alt="Слайд 3" /></div>
+        </div>
+      </div>
+
+      <div class="dots" id="dots">
+        <span class="dot active" onclick="goToSlide(0)"></span>
+        <span class="dot" onclick="goToSlide(1)"></span>
+        <span class="dot" onclick="goToSlide(2)"></span>
+      </div>
     </div>
 
     <script>
@@ -107,44 +167,53 @@
 
       function toggleSidebar() {
         const isOpen = sidebar.classList.contains("open");
-        if (isOpen) {
-          closeSidebar();
-        } else {
-          openSidebar();
-        }
+        isOpen ? closeSidebar() : openSidebar();
       }
 
       document.addEventListener("keydown", (e) => {
-        if (e.key.toLowerCase() === "m") {
-          toggleSidebar();
-        }
-        if (e.key === "Escape") {
-          closeSidebar();
-        }
+        if (e.key.toLowerCase() === "m") toggleSidebar();
+        if (e.key === "Escape") closeSidebar();
       });
 
-      // Обработка свайпов
+      // Свайпы меню
       let touchStartX = 0;
-      let touchEndX = 0;
-
       document.addEventListener("touchstart", (e) => {
         touchStartX = e.changedTouches[0].screenX;
       });
 
       document.addEventListener("touchend", (e) => {
-        touchEndX = e.changedTouches[0].screenX;
-        handleGesture();
+        const endX = e.changedTouches[0].screenX;
+        const deltaX = endX - touchStartX;
+
+        if (deltaX > 70) openSidebar();
+        if (deltaX < -70) closeSidebar();
       });
 
-      function handleGesture() {
-        const deltaX = touchEndX - touchStartX;
+      // Слайдер
+      const sliderTrack = document.getElementById("sliderTrack");
+      const dots = document.querySelectorAll(".dot");
+      let currentIndex = 0;
 
-        if (deltaX > 70) {
-          openSidebar(); // свайп вправо — открыть
-        } else if (deltaX < -70) {
-          closeSidebar(); // свайп влево — закрыть
-        }
+      function goToSlide(index) {
+        sliderTrack.style.transform = `translateX(-${index * 100}%)`;
+        dots[currentIndex].classList.remove("active");
+        dots[index].classList.add("active");
+        currentIndex = index;
       }
+
+      // Свайпы для слайдера (внутри слайдера!)
+      let slideStartX = 0;
+      sliderTrack.addEventListener("touchstart", (e) => {
+        slideStartX = e.touches[0].clientX;
+      });
+
+      sliderTrack.addEventListener("touchend", (e) => {
+        let slideEndX = e.changedTouches[0].clientX;
+        let diff = slideStartX - slideEndX;
+
+        if (diff > 50 && currentIndex < 2) goToSlide(currentIndex + 1);
+        if (diff < -50 && currentIndex > 0) goToSlide(currentIndex - 1);
+      });
     </script>
   </body>
 </html>
