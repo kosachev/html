@@ -175,7 +175,7 @@
         if (e.key === "Escape") closeSidebar();
       });
 
-      // Свайпы меню
+      // Свайп: только закрытие меню
       let touchStartX = 0;
       document.addEventListener("touchstart", (e) => {
         touchStartX = e.changedTouches[0].screenX;
@@ -185,7 +185,7 @@
         const endX = e.changedTouches[0].screenX;
         const deltaX = endX - touchStartX;
 
-        if (deltaX > 70) openSidebar();
+        // Только закрытие меню по свайпу влево
         if (deltaX < -70) closeSidebar();
       });
 
@@ -201,7 +201,7 @@
         currentIndex = index;
       }
 
-      // Свайпы для слайдера (внутри слайдера!)
+      // Свайпы только внутри слайдера
       let slideStartX = 0;
       sliderTrack.addEventListener("touchstart", (e) => {
         slideStartX = e.touches[0].clientX;
