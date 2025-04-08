@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Меню + Слайдер</title>
+    <title>Меню + Слайдер + Кнопки</title>
     <style>
       * {
         box-sizing: border-box;
@@ -22,7 +22,7 @@
         background-color: #333;
         color: white;
         padding: 1rem;
-        z-index: 1000;
+        z-index: 1002;
       }
 
       .menu-button {
@@ -114,6 +114,54 @@
       .dot.active {
         background: #333;
       }
+
+      /* Кнопки под слайдером */
+      .product-actions {
+        text-align: center;
+        margin-top: 2rem;
+      }
+
+      .price {
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+        color: #702737;
+      }
+
+      .btn {
+        background: #702737;
+        color: white;
+        font-weight: bold;
+        border: none;
+        padding: 1rem;
+        width: 100%;
+        max-width: 400px;
+        margin: 0.5rem auto;
+        display: block;
+        border-radius: 10px;
+        font-size: 1rem;
+      }
+
+      .divider {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 1rem 0;
+        color: #702737;
+      }
+
+      .divider hr {
+        border: none;
+        border-top: 1px solid #e5bfc6;
+        width: 40%;
+        margin: 0 10px;
+      }
+
+      .contact-title {
+        font-weight: bold;
+        color: #702737;
+        margin: 1rem 0 0.5rem;
+      }
     </style>
   </head>
   <body>
@@ -149,6 +197,20 @@
         <span class="dot" onclick="goToSlide(1)"></span>
         <span class="dot" onclick="goToSlide(2)"></span>
       </div>
+
+      <!-- Новый блок кнопок -->
+      <div class="product-actions">
+        <p class="price">13 900₽</p>
+        <button class="btn primary">КУПИТЬ</button>
+        <div class="divider">
+          <hr />
+          <span>⌄</span>
+          <hr />
+        </div>
+        <p class="contact-title">Для связи по всем вопросам</p>
+        <button class="btn secondary">ПОЗВОНИТЬ В МАГАЗИН</button>
+        <button class="btn secondary">НАПИСАТЬ В WHATSAPP</button>
+      </div>
     </div>
 
     <script>
@@ -175,7 +237,7 @@
         if (e.key === "Escape") closeSidebar();
       });
 
-      // Свайп: только закрытие меню
+      // Только закрытие меню по свайпу влево
       let touchStartX = 0;
       document.addEventListener("touchstart", (e) => {
         touchStartX = e.changedTouches[0].screenX;
@@ -185,7 +247,6 @@
         const endX = e.changedTouches[0].screenX;
         const deltaX = endX - touchStartX;
 
-        // Только закрытие меню по свайпу влево
         if (deltaX < -70) closeSidebar();
       });
 
@@ -201,7 +262,7 @@
         currentIndex = index;
       }
 
-      // Свайпы только внутри слайдера
+      // Свайпы для слайдера
       let slideStartX = 0;
       sliderTrack.addEventListener("touchstart", (e) => {
         slideStartX = e.touches[0].clientX;
